@@ -4,11 +4,12 @@ import DataGridInfo from './DataGridInfo';
 
 function DataGrid() {
   const [data, setData] = useState([]);
+  const [filterValue, setFilterValue] = useState('Location');
+  const [sortByColumn, setSortByColumn] = useState('location');
+  const [sortingOrder, setSortingOrder] = useState('asc');
 
-  // fetch call to get the grid data
   useEffect(() => {
-    const url =
-      'http://localhost:3001/filterAndSort?siteInfo=Location&sortBy=location&sortOrder=asc';
+    const url = `http://localhost:3001/filterAndSort?siteInfo=${filterValue}&sortBy=${sortByColumn}&sortOrder=${sortingOrder}`;
     fetch(url)
       .then((response) => {
         if (!response.ok) {
@@ -22,58 +23,62 @@ function DataGrid() {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [filterValue, sortByColumn, sortingOrder]);
+
   console.log(data);
   return (
-    <div className="DataGrid">
-      <table>
-        <thead>
-          <tr>
-            <th>Location</th>
-            <th>Potential Revenue Annualized</th>
-            <th>competitior ProcessingVolume Annualized</th>
-            <th>competitior Merchant Annualized</th>
-            <th>Revenue/Account Annualized</th>
-            <th>Market Share Annualized</th>
-            <th>Commercial DDA's</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length > 0 ? (
-            <DataGridInfo gridInfo={data} />
-          ) : (
-            <p>No data available</p>
-          )}
-          {/* {data.length > 0 ? (
-            data.map((value, key) => {
-              const formattedPotentialRevenue =
-                value.potentialRevenue.toLocaleString();
-              const formattedCompetitiorProcessing =
-                value.competitiorProcessingVolume.toLocaleString();
-              const formattedRevenueAccount =
-                value.revenueAccount.toLocaleString();
-              const formattedCommercialDda =
-                value.commercialDda.toLocaleString();
-              return (
-                <tr key={key}>
-                  <td>{value.location}</td>
-                  <td>${formattedPotentialRevenue}</td>
-                  <td>${formattedCompetitiorProcessing}</td>
-                  <td>{value.competitiorMerchant}</td>
-                  <td>${formattedRevenueAccount}</td>
-                  <td>{value.marketShareByRevenue}%</td>
-                  <td>{formattedCommercialDda}</td>
-                  <button>Button</button>
-                </tr>
-              );
-            })
-          ) : (
-            <li>No data available</li>
-          )} */}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="dropdown">
+        <label>Primary View | </label>
+        <select
+          value={filterValue}
+          onChange={(e) => setFilterValue(e.target.value)}
+        >
+          <option value="Location" selected="selected">
+            Location
+          </option>
+          <option value="Branch">Branch</option>
+        </select>
+      </div>
+      <div className="DataGrid">
+        <table>
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>
+                Potential Revenue <br />
+                <span className="small-font">Annualized</span>
+              </th>
+              <th>
+                Competitior ProcessingVolume <br />
+                <span className="small-font">Annualized</span>
+              </th>
+              <th>
+                Competitior Merchant <br />
+                <span className="small-font">Annualized</span>
+              </th>
+              <th>
+                Revenue/Account <br />
+                <span className="small-font">Annualized</span>
+              </th>
+              <th>
+                Market Share <br />
+                <span className="small-font">By Revenue</span>
+              </th>
+              <th>Commercial DDA's</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length > 0 ? (
+              <DataGridInfo gridInfo={data} />
+            ) : (
+              <p>No data available</p>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 export default DataGrid;
