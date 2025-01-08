@@ -17,7 +17,7 @@ const siteInfoData = [
     revenueAccount: 3203,
     marketShareByRevenue: 33.33,
     commercialDda: 220,
-    branchId: 4,
+    locationId: 0,
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const siteInfoData = [
     revenueAccount: 3203,
     marketShareByRevenue: 33.33,
     commercialDda: 220,
-    branchId: 5,
+    locationId: 0,
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const siteInfoData = [
     revenueAccount: 3114,
     marketShareByRevenue: 33.33,
     commercialDda: 792,
-    branchId: 6,
+    locationId: 0,
   },
   {
     id: 4,
@@ -53,6 +53,7 @@ const siteInfoData = [
     revenueAccount: 3060,
     marketShareByRevenue: 33.33,
     commercialDda: 1148,
+    locationId: 1,
   },
   {
     id: 5,
@@ -64,6 +65,7 @@ const siteInfoData = [
     revenueAccount: 3201,
     marketShareByRevenue: 33.33,
     commercialDda: 1028,
+    locationId: 2,
   },
   {
     id: 6,
@@ -75,6 +77,7 @@ const siteInfoData = [
     revenueAccount: 3242,
     marketShareByRevenue: 33.33,
     commercialDda: 1008,
+    locationId: 3,
   },
 ];
 /**
@@ -114,6 +117,19 @@ app.get('/filterAndSort', (req, res) => {
     const sortedData = customSort(filteredData, sortBy, sortOrder);
     return res.json(sortedData);
   }
+  res.json(filteredData);
+});
+
+app.get('/getBranchData/:id', (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  if (!id) {
+    return res.status(400).json({ error: 'Missing id parameter' });
+  }
+  const filteredData = siteInfoData.filter(
+    (item) => item.locationId === Number(id)
+  );
+  console.log(filteredData);
   res.json(filteredData);
 });
 

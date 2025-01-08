@@ -11,6 +11,24 @@ function DataGridInfo({ gridInfo }) {
   const calculatePercentage = (currentValue, totalValue) => {
     return ((currentValue / totalValue) * 100).toFixed(2);
   };
+
+  const fetchBranchData = (locationId) => {
+    const url = 'http://localhost:3001/getBranchData/' + locationId;
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('API failed');
+        }
+        return response.json();
+      })
+      .then((result) => {
+        setFinalData(result);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
   // to calculate total values
   const calculateTotals = () => {
     return gridInfo.reduce(
@@ -68,6 +86,10 @@ function DataGridInfo({ gridInfo }) {
     return `${formattedNum.toFixed(2)}${units[unitIndex] || ''}`;
   };
 
+  const changeData = (newData) => {
+    setFinalData(newData);
+  };
+
   const totals = calculateTotals();
   return (
     <>
@@ -88,7 +110,17 @@ function DataGridInfo({ gridInfo }) {
       {currentList.map((value, key) => {
         return (
           <tr key={key}>
-            <td>{value.location}</td>
+            <td>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  changeData(fetchBranchData(value.locationId));
+                }}
+              >
+                {value.location}
+              </a>
+            </td>
             <td>
               ${value.potentialRevenue.toLocaleString()} (
               {calculatePercentage(
