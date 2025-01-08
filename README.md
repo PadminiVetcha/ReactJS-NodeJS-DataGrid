@@ -76,3 +76,13 @@ Output:
 "message": "Record with id 1 deleted successfully"
 }
 ```
+
+# Frontend Functionalities
+
+1. Dropdown of Location and Branch are implemented.
+   
+2. Total value of data is being calculated.
+
+3. Data is getting deleted after clicking on cross(X) button, but page needs to be refreshed to get the updated data.
+
+4. Once data is deleted, the total values are being calculated dynamically
