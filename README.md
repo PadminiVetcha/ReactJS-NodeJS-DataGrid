@@ -18,52 +18,52 @@ Possible Values for siteInfo is Location or Branch
 
 Possible values for sortBy is any of the column names
 
-Output: 
+Output:
 
 ```json
 [
-{
-"id": 1,
-"siteInfo": "Location",
-"location": "Colorado",
-"potentialRevenue": 624596,
-"competitiorProcessingVolume": 52049666,
-"competitiorMerchant": 195,
-"revenueAccount": 3203,
-"marketShareByRevenue": 33.33,
-"commercialDda": 220,
-"branchId": 4
-},
-{
-"id": 2,
-"siteInfo": "Location",
-"location": "Florida",
-"potentialRevenue": 600628,
-"competitiorProcessingVolume": 52049666,
-"competitiorMerchant": 195,
-"revenueAccount": 3203,
-"marketShareByRevenue": 33.33,
-"commercialDda": 220,
-"branchId": 5
-},
-{
-"id": 3,
-"siteInfo": "Location",
-"location": "Mississipi",
-"potentialRevenue": 660596,
-"competitiorProcessingVolume": 1385666,
-"competitiorMerchant": 198,
-"revenueAccount": 3114,
-"marketShareByRevenue": 33.33,
-"commercialDda": 792,
-"branchId": 6
-}
-] 
+  {
+    "id": 1,
+    "siteInfo": "Location",
+    "location": "Colorado",
+    "potentialRevenue": 624596,
+    "competitiorProcessingVolume": 52049666,
+    "competitiorMerchant": 195,
+    "revenueAccount": 3203,
+    "marketShareByRevenue": 33.33,
+    "commercialDda": 220,
+    "branchId": 4
+  },
+  {
+    "id": 2,
+    "siteInfo": "Location",
+    "location": "Florida",
+    "potentialRevenue": 600628,
+    "competitiorProcessingVolume": 52049666,
+    "competitiorMerchant": 195,
+    "revenueAccount": 3203,
+    "marketShareByRevenue": 33.33,
+    "commercialDda": 220,
+    "branchId": 5
+  },
+  {
+    "id": 3,
+    "siteInfo": "Location",
+    "location": "Mississipi",
+    "potentialRevenue": 660596,
+    "competitiorProcessingVolume": 1385666,
+    "competitiorMerchant": 198,
+    "revenueAccount": 3114,
+    "marketShareByRevenue": 33.33,
+    "commercialDda": 792,
+    "branchId": 6
+  }
+]
 ```
 
 # 2. To delete the data
 
-Endpoint : /delete/{id}
+Endpoint : /delete/:id
 
 Method: DELETE
 
@@ -73,14 +73,40 @@ Output:
 
 ```json
 {
-"message": "Record with id 1 deleted successfully"
+  "message": "Record with id 1 deleted successfully"
 }
+```
+
+# 3. To fetch branch data from locations
+
+Endpoint : /getBranchData/:locationId
+
+Method: GET
+
+Output:
+
+```json
+[
+  [
+    {
+      "id": 4,
+      "siteInfo": "Branch",
+      "location": "Branch 1",
+      "potentialRevenue": 878269,
+      "competitiorProcessingVolume": 73189083,
+      "competitiorMerchant": 287,
+      "revenueAccount": 3060,
+      "marketShareByRevenue": 33.33,
+      "commercialDda": 1148,
+      "locationId": 1
+    }
+  ]
+]
 ```
 
 # Frontend Functionalities
 
 1. Dropdown of Location and Branch are implemented.
-   
 2. Total value of data is being calculated.
 
 3. Data is getting deleted after clicking on cross(X) button, but page needs to be refreshed to get the updated data.
